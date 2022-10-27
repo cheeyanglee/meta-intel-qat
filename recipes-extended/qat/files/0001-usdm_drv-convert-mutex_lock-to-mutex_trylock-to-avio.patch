@@ -1,7 +1,8 @@
-From acf49dcacc450830bf9ccad5dcd895ce1b8ba786 Mon Sep 17 00:00:00 2001
+From 2a4c1dd6bedeb03e5a7a2d3d4ee73dbfdda0add2 Mon Sep 17 00:00:00 2001
 From: Liwei Song <liwei.song@windriver.com>
 Date: Thu, 22 Jul 2021 08:09:05 +0000
 Subject: [PATCH] usdm_drv: convert mutex_lock to mutex_trylock to aviod
+
  deadlock
 
 exist the following deadlock when run cpa_sample_code:
@@ -17,7 +18,8 @@ ffffffffc04883d0 (&dev_mem_lock
 ){+.+.}-{3:3}, at: mem_mmap+0x32/0x160 [usdm_drv]
 
 but task is already holding lock:
-ff1ab034bf111278 (&mm->mmap_lock#2){++++}-{3:3}, at: vm_mmap_pgoff+0x99/0x100
+ff1ab034bf111278 (&mm->mmap_lock#2){++++}-{3:3}, at:
+vm_mmap_pgoff+0x99/0x100
 
 which lock already depends on the new lock.
 
@@ -51,7 +53,8 @@ WARNING: suspicious RCU usage
        __x64_sys_mmap+0x33/0x40
        do_syscall_64+0x38/0x50
        entry_SYSCALL_64_after_hwframe+0x44/0xa9
-kernel/sched/core.c:7263 Illegal context switch in RCU-bh read-side critical section!
+kernel/sched/core.c:7263 Illegal context switch in RCU-bh read-side
+critical section!
 
 other info that might help us debug this:
 
@@ -76,7 +79,7 @@ Signed-off-by: Liwei Song <liwei.song@windriver.com>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/quickassist/utilities/libusdm_drv/linux/kernel_space/qae_mem_drv.c b/quickassist/utilities/libusdm_drv/linux/kernel_space/qae_mem_drv.c
-index e404647aafb2..2a4de14a0300 100644
+index d73cb0d..06e5d15 100644
 --- a/quickassist/utilities/libusdm_drv/linux/kernel_space/qae_mem_drv.c
 +++ b/quickassist/utilities/libusdm_drv/linux/kernel_space/qae_mem_drv.c
 @@ -87,6 +87,7 @@
@@ -87,8 +90,8 @@ index e404647aafb2..2a4de14a0300 100644
  
  #include "qae_mem_utils.h"
  
-@@ -975,7 +976,10 @@ mem_mmap(struct file *fp, struct vm_area_struct *vma)
-     unsigned long size = vma->vm_end - vma->vm_start;
+@@ -1049,7 +1050,10 @@ mem_mmap(struct file *fp, struct vm_area_struct *vma)
+     uint64_t pages = size >> PAGE_SHIFT;
      id = vma->vm_pgoff << PAGE_SHIFT;
  
 -    mutex_lock(&dev_mem_lock);
@@ -99,6 +102,3 @@ index e404647aafb2..2a4de14a0300 100644
      kmem = userMemGetInfo(fp, id);
      if (!kmem)
      {
--- 
-2.29.2
-
