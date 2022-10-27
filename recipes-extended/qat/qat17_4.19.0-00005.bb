@@ -1,5 +1,5 @@
 DESCRIPTION = "Intel(r) QuickAssist Technology API"
-HOMEPAGE = "https://01.org/packet-processing/intel%C2%AE-quickassist-technology-drivers-and-patches"
+HOMEPAGE = "https://www.intel.com/content/www/us/en/developer/topic-technology/open/quick-assist-technology/overview.html"
 
 #Dual BSD and GPLv2 License
 LICENSE = "BSD-3-Clause & GPL-2.0-only"
@@ -12,25 +12,21 @@ PROVIDES += "virtual/qat"
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 
-SRC_URI = "https://downloadmirror.intel.com/30178/eng/QAT1.7.L.4.14.0-00031.tar.gz;subdir=qat17 \
+SRC_URI = "https://downloadmirror.intel.com/743650/QAT.L.4.19.0-00005.tar.gz;subdir=qat17 \
            file://0001-qat-fix-for-cross-compilation-issue.patch \
            file://0002-qat-remove-local-path-from-makefile.patch \
            file://0003-qat-override-CC-LD-AR-only-when-it-is-not-define.patch \
            file://0004-update-KDIR-for-cross-compilation.patch \
            file://0005-Added-include-dir-path.patch \
            file://0006-qat-add-install-target-and-add-folder.patch \
-           file://0007-qat-use-static-lib-for-linking-under-cpa-sample-code.patch \
            file://0009-crypto-qat-Silence-smp_processor_id-warning.patch \
-           file://0011-qat17-use-namespace-CRYPTO_INTERNAL.patch \
            file://0001-usdm_drv-convert-mutex_lock-to-mutex_trylock-to-avio.patch \
-           file://qat-use-default_groups-in-kobj_type.patch \
            file://qat-remove-the-deprecated-pci-dma-compat.h-API.patch \
           "
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-SRC_URI[md5sum] = "a6ff665184159583542dac89b9226f09"
-SRC_URI[sha256sum] = "a68dfaea4308e0bb5f350b7528f1a076a0c6ba3ec577d60d99dc42c49307b76e"
+SRC_URI[sha256sum] = "0eeb6c56f88617ada642d78f805a1a4b5b343a2fa62f34e72726537149a7e27e"
 
 COMPATIBLE_MACHINE = "null"
 COMPATIBLE_HOST:x86-x32 = 'null'
@@ -155,7 +151,7 @@ do_install() {
   install -m 0755 ${S}/quickassist/lookaside/access_layer/src/sample_code/performance/compression/canterbury  ${D}${nonarch_base_libdir}/firmware
 
   #install qat source
-  cp ${DL_DIR}/QAT1.7.L.${PV}.tar.gz ${D}${prefix}/src/qat/
+  cp ${DL_DIR}/QAT.L.${PV}.tar.gz ${D}${prefix}/src/qat/
 }
 
 SYSROOT_DIRS += "/opt"
