@@ -12,14 +12,17 @@ SRC_URI = "git://github.com/intel/QATzip;protocol=https;branch=master \
            file://remove-rpath.patch \
 "
 
-SRCREV = "ba2eae63a4d1a165c9d303737b9e14f1ea7f3ce7"
+SRCREV = "a30e179b2d495924f0a52b8cf113fa00ffe5df34"
 
-DEPENDS += "qat17"
+DEPENDS += "qat17 util-linux-native lz4 "
 
-PV = "1.0.8+git${SRCPV}"
+PV = "1.0.9+git${SRCPV}"
 
 export ICP_ROOT = "${STAGING_DIR_TARGET}/opt/intel/QAT"
 export QZ_ROOT = "${S}"
+
+# static library required to compile qzip and test
+DISABLE_STATIC = ""
 
 COMPATIBLE_MACHINE = "null"
 
