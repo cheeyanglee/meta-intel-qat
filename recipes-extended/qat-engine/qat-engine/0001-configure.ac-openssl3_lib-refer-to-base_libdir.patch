@@ -1,0 +1,29 @@
+From ebe06544db61cdbc6fca553cbfdeed4609ab44ae Mon Sep 17 00:00:00 2001
+From: Chee Yang Lee <chee.yang.lee@intel.com>
+Date: Fri, 11 Nov 2022 10:34:52 +0800
+Subject: [PATCH] configure.ac: openssl3_lib refer to base_libdir
+
+Upstream-Status: Inappropriate
+
+Signed-off-by: Chee Yang Lee <chee.yang.lee@intel.com>
+---
+ configure.ac | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index c58df40..a216c19 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -282,7 +282,8 @@ then
+ fi
+ 
+ #OpenSSL 3.0 uses lib location based on ARCH
+-AS_IF([test "$host_cpu" = "x86_64"], [AC_SUBST([openssl3_lib], "lib64")], [AC_SUBST([openssl3_lib], "lib")])
++#AS_IF([test "$host_cpu" = "x86_64"], [AC_SUBST([openssl3_lib], "lib64")], [AC_SUBST([openssl3_lib], "lib")])
++AC_SUBST([openssl3_lib], "$base_libdir")
+ 
+ # OpenSSL install dir or set system openssl install dir if not provided
+ if test "x$with_openssl_install_dir" != "x"
+-- 
+2.37.3
+
