@@ -1,0 +1,89 @@
+From 72b5ce37a094ef6a0b93ed308aa5493031f74d90 Mon Sep 17 00:00:00 2001
+From: Chee Yang Lee <chee.yang.lee@intel.com>
+Date: Wed, 9 Nov 2022 15:11:47 +0800
+Subject: [PATCH 2/2] configure.ac: remove rpath
+
+This removes references to RPATHS that are not necesary when
+building using bitbake.
+
+Upstream-Status: Inappropriate [configuration]
+
+Signed-off-by: Chee Yang Lee <chee.yang.lee@intel.com>
+---
+ configure.ac | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 51d7790..c58df40 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -302,7 +302,7 @@ then
+           AC_MSG_ERROR([Not found any librares in $with_openssl_install_dir/lib])
+         fi
+       fi
+-      AC_SUBST([QAT_BORINGSSL_LIB], ["-Wl,-rpath,\$(with_openssl_install_dir)/lib -L\$(with_openssl_install_dir)/lib -ldecrepit -lcrypto -lssl"])
++      AC_SUBST([QAT_BORINGSSL_LIB], [" -L\$(with_openssl_install_dir)/lib -ldecrepit -lcrypto -lssl"])
+       AC_SUBST([LIBQATNAME], "libqatengine")
+       if test -d "$with_openssl_install_dir/crypto"
+       then
+@@ -319,18 +319,18 @@ then
+         AC_MSG_NOTICE([Build QAT Provider against OpenSSL 3.0])
+         libdir="\$(with_openssl_install_dir)/\$(openssl3_lib)/ossl-modules"
+         AC_SUBST([cflags_openssl_3], ["-DQAT_OPENSSL_3 -DOPENSSL_SUPPRESS_DEPRECATED -DQAT_OPENSSL_PROVIDER"])
+-        AC_SUBST([OPENSSL_LIB], ["-Wl,-rpath,\$(with_openssl_install_dir)/\$(openssl3_lib) -L\$(with_openssl_install_dir)/\$(openssl3_lib) -lcrypto"])
++        AC_SUBST([OPENSSL_LIB], [" -L\$(with_openssl_install_dir)/\$(openssl3_lib) -lcrypto"])
+         AC_SUBST([LIBQATNAME], "qatprovider")
+       else
+         AC_MSG_NOTICE([Build QAT Engine against OpenSSL 3.0])
+         libdir="\$(with_openssl_install_dir)/\$(openssl3_lib)/engines-3"
+         AC_SUBST([cflags_openssl_3], ["-DQAT_OPENSSL_3 -DOPENSSL_SUPPRESS_DEPRECATED"])
+-        AC_SUBST([OPENSSL_LIB], ["-Wl,-rpath,\$(with_openssl_install_dir)/\$(openssl3_lib) -L\$(with_openssl_install_dir)/\$(openssl3_lib) -lcrypto"])
++        AC_SUBST([OPENSSL_LIB], [" -L\$(with_openssl_install_dir)/\$(openssl3_lib) -lcrypto"])
+       fi
+     else
+       AC_MSG_NOTICE([Build QAT engine against OpenSSL 1.1.1])
+       libdir="\$(with_openssl_install_dir)/lib/engines-1.1"
+-      AC_SUBST([OPENSSL_LIB], ["-Wl,-rpath,\$(with_openssl_install_dir)/lib -L\$(with_openssl_install_dir)/lib -lcrypto"])
++      AC_SUBST([OPENSSL_LIB], [" -L\$(with_openssl_install_dir)/lib -lcrypto"])
+     fi
+   fi
+   AC_SUBST([includes_openssl], ["-I\$(with_openssl_install_dir)/include"])
+@@ -384,7 +384,7 @@ then
+     AC_MSG_NOTICE([Enabling build for QAT SW for PKE with crypto_mb library from the path provided])
+     AC_SUBST([cflags_qat_sw], ["-DQAT_SW"])
+     AC_SUBST([includes_qat_sw_crypto_mb], ["-I\$(with_qat_sw_crypto_mb_install_dir)/include"])
+-    AC_SUBST([QAT_SW_CRYPTO_MB_LIB], ["-Wl,-rpath,\$(with_qat_sw_crypto_mb_install_dir)/lib -L\$(with_qat_sw_crypto_mb_install_dir)/lib -lcrypto_mb"])
++    AC_SUBST([QAT_SW_CRYPTO_MB_LIB], [" -L\$(with_qat_sw_crypto_mb_install_dir)/lib -lcrypto_mb"])
+   else
+     AC_CHECK_LIB(crypto_mb, mbx_getversion, [AC_MSG_NOTICE([Enabling build for QAT SW for PKE with crypto_mb library from standard path])], [AC_MSG_NOTICE([crypto_mb Library not found, Disabling QAT SW for PKE algorithms])], [])
+     if test "x$ac_cv_lib_crypto_mb_mbx_getversion" = "xyes"
+@@ -405,7 +405,7 @@ then
+     AC_MSG_NOTICE([Enabling build for QAT SW for AES-GCM with IPsec_mb library from the path provided])
+     AC_SUBST([cflags_qat_sw_ipsec], ["-DQAT_SW_IPSEC"])
+     AC_SUBST([includes_qat_sw_ipsec_mb], ["-I\$(with_qat_sw_ipsec_mb_install_dir)/include"])
+-    AC_SUBST([QAT_SW_IPSEC_MB_LIB], ["-Wl,-rpath,\$(with_qat_sw_ipsec_mb_install_dir)/lib -L\$(with_qat_sw_ipsec_mb_install_dir)/lib -lIPSec_MB"])
++    AC_SUBST([QAT_SW_IPSEC_MB_LIB], [" -L\$(with_qat_sw_ipsec_mb_install_dir)/lib -lIPSec_MB"])
+   else
+     AC_CHECK_LIB(IPSec_MB, imb_get_version, [AC_MSG_NOTICE([Enabling build for QAT SW for AES-GCM with IPsec_mb library from standard path])], [AC_MSG_NOTICE([IPSec_MB Library not found, Disabling QAT_SW GCM])], [])
+     if test "x$ac_cv_lib_IPSec_MB_imb_get_version" = "xyes"
+@@ -933,7 +933,7 @@ then
+     then
+       with_qat_hw_install_dir="\$(with_qat_hw_dir)/build"
+     fi
+-    AC_SUBST([QAT_HW_DRIVER_LIB], ["-Wl,-rpath,\$(with_qat_hw_install_dir) -L\$(with_qat_hw_install_dir) -l\$(DRIVER)"])
++    AC_SUBST([QAT_HW_DRIVER_LIB], [" -L\$(with_qat_hw_install_dir) -l\$(DRIVER)"])
+   fi
+ fi
+ 
+@@ -949,7 +949,7 @@ then
+       then
+        with_qat_hw_usdm_dir="\$(with_qat_hw_dir)/quickassist/utilities/libusdm_drv"
+       fi
+-      AC_SUBST([QAT_HW_MEM_LIB], ["-Wl,-rpath,\$(with_qat_hw_usdm_dir) -L\$(with_qat_hw_usdm_dir) -l\$(USDM)"])
++      AC_SUBST([QAT_HW_MEM_LIB], [" -L\$(with_qat_hw_usdm_dir) -l\$(USDM)"])
+       AC_SUBST([includes_qat_hw_usdm], ["-I\$(with_qat_hw_usdm_dir)"])
+     fi
+   fi
+-- 
+2.37.3
+
