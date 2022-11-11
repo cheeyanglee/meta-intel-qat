@@ -1,9 +1,4 @@
-SUMMARY = "Intel® QuickAssist Technology(QAT) OpenSSL* Engine"
-
-DESCRIPTION = "Intel® QuickAssist Technology OpenSSL* Engine (QAT_Engine) \
-supports acceleration for both hardware as well as optimized software based on vectorized instructions."
-
-HOMEPAGE = "https://github.com/intel/QAT_Engine"
+require qat-engine-common.inc
 
 LICENSE = "BSD-3-Clause & GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=45ebf4c80a1695fbde1332d52ec3172e \
@@ -14,13 +9,10 @@ LICENSE:${PN}-dev = "BSD-3-Clause"
 LICENSE:${PN}-dbg = "BSD-3-Clause"
 LICENSE:${PN}-cfg = "GPL-2.0-or-later"
 
-SRC_URI = "git://github.com/intel/QAT_Engine.git;protocol=https;branch=master; \
-           file://0001-configure.ac-remove-AC_CHECK_FILE.patch \
-           file://0002-configure.ac-remove-rpath.patch \
-           file://0001-configure.ac-openssl3_lib-refer-to-base_libdir.patch \
+SRC_URI += " file://0001-configure.ac-remove-AC_CHECK_FILE.patch \
+             file://0002-configure.ac-remove-rpath.patch \
+             file://0001-configure.ac-openssl3_lib-refer-to-base_libdir.patch \
 "
-
-SRCREV = "c1a7a965ce450afec74d490d0a6f7d382a1126aa"
 
 DEPENDS = "qat17 openssl"
 DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'intel-crypto-mb', 'intel-crypto-mb', '', d)}"

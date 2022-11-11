@@ -1,0 +1,30 @@
+From 52a6d98399dfc06ae727b53463756529db98bf38 Mon Sep 17 00:00:00 2001
+From: Chee Yang Lee <chee.yang.lee@intel.com>
+Date: Fri, 11 Nov 2022 17:17:14 +0800
+Subject: [PATCH] Makefile: add modules_install target
+
+add modules_install target for yocto install purpose.
+
+Upstream-Status: Inappropriate [yocto specific]
+
+Signed-off-by: Chee Yang Lee <chee.yang.lee@intel.com>
+---
+ Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index c0ef000..47b6140 100644
+--- a/Makefile
++++ b/Makefile
+@@ -47,3 +47,8 @@ test: all
+ clean:
+ 	rm -f *.o *.ko Module.symvers modules.order *.mod.c .*.cmd $(MODULENAME)_test
+ 
++
++modules_install:
++	$(MAKE) -C $(KDIR) M=$(shell pwd) modules_install
++
++
+-- 
+2.37.3
+
