@@ -6,7 +6,7 @@ HOMEPAGE = "https://github.com/intel/QATzip"
 LICENSE = "BSD-3-Clause & GPL-2.0-only"
 LIC_FILES_CHKSUM = "\
                    file://LICENSE;md5=e499c81a76f6663c808889cc77414866 \
-                   file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6 \
+                   file://config_file/LICENSE.GPL;md5=751419260aa954499f7abaabaa882bbe \
 "
 SRC_URI = "git://github.com/intel/QATzip;protocol=https;branch=master \
            file://remove-rpath.patch \
