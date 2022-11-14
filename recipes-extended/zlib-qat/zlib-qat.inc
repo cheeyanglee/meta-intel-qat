@@ -8,8 +8,8 @@ HOMEPAGE = "http://zlib.net/"
 SECTION = "libs"
 LICENSE = "Zlib & GPL-2.0-only & BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/zlib-${ZLIB_VERSION}/zlib.h;beginline=4;endline=23;md5=fde612df1e5933c428b73844a0c494fd \
-		    file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6 \
-		    file://${COMMON_LICENSE_DIR}/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9"
+		    file://contrib/qat/config/README;beginline=4;endline=28;md5=4a47e3f9b715ef7ef061725157e1b384 \
+		    file://contrib/qat/config/README;beginline=29;endline=59;md5=d20c448f57abeda5beb5b2148a9bc8cb"
 
 # For target side versions of openssl enable support for OCF Linux driver
 # if they are available.
