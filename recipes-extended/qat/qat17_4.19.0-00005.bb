@@ -4,8 +4,8 @@ HOMEPAGE = "https://www.intel.com/content/www/us/en/developer/topic-technology/o
 #Dual BSD and GPLv2 License
 LICENSE = "BSD-3-Clause & GPL-2.0-only"
 LIC_FILES_CHKSUM = "\
-                    file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6 \
-                    file://${COMMON_LICENSE_DIR}/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9 \
+                    file://LICENSE.GPL;md5=751419260aa954499f7abaabaa882bbe \
+                    file://LICENSE.BSD;md5=4a6a5cd99f6064d61adad8c6c0bd080f \
                     "
 DEPENDS += "boost udev zlib openssl yasm-native"
 PROVIDES += "virtual/qat"
