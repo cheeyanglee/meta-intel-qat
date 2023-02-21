@@ -1,0 +1,31 @@
+From 3d74581601ea33761bc00da996ca56719f25d55e Mon Sep 17 00:00:00 2001
+From: Lee Chee Yang <chee.yang.lee@intel.com>
+Date: Tue, 14 Feb 2023 18:15:19 +0800
+Subject: [PATCH] qat20: remove local path from makefile
+
+Upstream-Status: Inappropriate [Configuration]
+
+Remove the host machine /usr/include path from makefile.
+
+Signed-off-by: Lee Chee Yang <chee.yang.lee@intel.com>
+
+---
+ .../build_files/env_files/linux_2.6_user_space.mk            | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/quickassist/build_system/build_files/env_files/linux_2.6_user_space.mk b/quickassist/build_system/build_files/env_files/linux_2.6_user_space.mk
+index 5565a7b..dd9c461 100644
+--- a/quickassist/build_system/build_files/env_files/linux_2.6_user_space.mk
++++ b/quickassist/build_system/build_files/env_files/linux_2.6_user_space.mk
+@@ -46,11 +46,6 @@
+ #
+ #-------------------------------------------------------------
+ 
+-ifdef SYSROOT
+-INCLUDES+=-I$(SYSROOT)/usr/include
+-else
+-INCLUDES+=-I/usr/include
+-endif
+ 
+ INCLUDES += -I$(API_DIR)
+ INCLUDES += -I$(OSAL_DIR)/include

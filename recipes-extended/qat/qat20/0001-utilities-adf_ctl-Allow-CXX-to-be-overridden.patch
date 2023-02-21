@@ -1,0 +1,28 @@
+From eb39390d69da73de469791ff77b8f69a5ae95d74 Mon Sep 17 00:00:00 2001
+From: Chee Yang Lee <chee.yang.lee@intel.com>
+Date: Mon, 20 Feb 2023 15:20:40 +0800
+Subject: [PATCH] utilities/adf_ctl: Allow CXX to be overridden
+
+Upstream-Status: Inappropriate [Configuration]
+
+Signed-off-by: Chee Yang Lee <chee.yang.lee@intel.com>
+---
+ quickassist/utilities/adf_ctl/common.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/quickassist/utilities/adf_ctl/common.mk b/quickassist/utilities/adf_ctl/common.mk
+index 26e1695..6c64dac 100644
+--- a/quickassist/utilities/adf_ctl/common.mk
++++ b/quickassist/utilities/adf_ctl/common.mk
+@@ -87,7 +87,7 @@ EXTRA_LDFLAGS += --sysroot=$(SYSROOT)
+ EXTRA_CXXFLAGS += --sysroot=$(SYSROOT)
+ endif
+ 
+-CXX = $(CROSS_COMPILE)g++
++CXX = g++
+ CXXFLAGS += -std=c++0x
+ CXXFLAGS += -I$(KERNEL_SOURCE_DIR)/drivers/crypto/qat/qat_common
+ 
+-- 
+2.37.3
+
