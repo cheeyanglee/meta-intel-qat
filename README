@@ -21,8 +21,8 @@ Supported QAT Version
 This layer provides the following QuickAssist Technology Software with their
 corresponding supported hardware
 
-  1) QATmux.L.2.6.0-60 (qat16) - Intel Communication Chipset 8925 to 8955 Series
-  2) QAT1.7.L.4.7.0-00006 (qat17) - Intel QAT HW version 1.7
+  1) QAT.L.4.20.0-00001 (qat17) - Intel QAT HW version 1.7
+  2) QAT20.L.1.0.0-00021 (qat20) - Intel QAT HW version 2.0
 
 For additional information for these QAT software and documentation, please go
 to https://01.org/intel-quickassist-technology
@@ -34,11 +34,7 @@ Additional QAT Features
 Apart from the QAT Software Packages, this layer includes recipes for several
 other software necessary for the QAT on various acceleration tasks
 
-  1) QAT Zlib Compression Shim Layer version 0.4.7-002 for QATmux.L.2.6.0-60
-  2) QAT Zlib Compression Shim Layer version 0.4.10-003 for QAT1.7.L.4.7.0-00006
-
-Ensure the correct QAT version for your platform, refer to "Supported QAT Version"
-section above for correct qat16 or qat17 to be used in your build conf.
+  1) QAT Zlib Compression Shim Layer version 0.4.10-003 for QAT1.7
 
 
 Dependencies
@@ -47,11 +43,12 @@ Dependencies
 This layer depends on:
 
   URI: git://git.openembedded.org/bitbake
-  branch: 1.38
 
   URI: git://git.openembedded.org/openembedded-core
   layers: meta
-  branch: sumo
+  
+  URI: git://git.openembedded.org/meta-openembedded
+  layers: meta-oe
 
 
 Guidelines for submitting patches
