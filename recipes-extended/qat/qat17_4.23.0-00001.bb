@@ -12,7 +12,7 @@ PROVIDES += "virtual/qat"
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 
-SRC_URI = "https://downloadmirror.intel.com/780675/QAT.L.4.22.0-00001.tar.gz;subdir=qat17 \
+SRC_URI = "https://downloadmirror.intel.com/788561/QAT.L.4.23.0-00001.tar.gz;subdir=qat17 \
            file://0001-qat-fix-for-cross-compilation-issue.patch \
            file://0002-qat-remove-local-path-from-makefile.patch \
            file://0003-qat-override-CC-LD-AR-only-when-it-is-not-define.patch \
@@ -21,11 +21,12 @@ SRC_URI = "https://downloadmirror.intel.com/780675/QAT.L.4.22.0-00001.tar.gz;sub
            file://0006-qat-add-install-target-and-add-folder.patch \
            file://0001-usdm_drv-convert-mutex_lock-to-mutex_trylock-to-avio.patch \
            file://qat-remove-the-deprecated-pci-dma-compat.h-API.patch \
+           file://fix-redefinition-of-crypto_request_complete.patch \
           "
 
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
-SRC_URI[sha256sum] = "b213f9c4c728405e8d4039633ec21012d5e2c8f39ba67a629a9530cd1b261238"
+SRC_URI[sha256sum] = "7052322ce854c1c694186dbdaaa954d11d78273ece742e9b2afad91e0e4ba350"
 
 COMPATIBLE_MACHINE = "null"
 COMPATIBLE_HOST:x86-x32 = 'null'
@@ -121,8 +122,7 @@ do_install() {
   install -D -m 0755 ${S}/quickassist/lookaside/access_layer/src/build/linux_2.6/user_space/libqat_s.so ${D}${base_libdir}
   install -D -m 0755 ${S}/quickassist/lookaside/access_layer/src/build/linux_2.6/user_space/libqat.a ${D}${base_libdir}
   install -D -m 0755 ${S}/quickassist/utilities/osal/src/build/linux_2.6/user_space/libosal_s.so ${D}${base_libdir}
-  install -D -m 0755 ${S}/quickassist/utilities/osal/src/build/linux_2.6/user_space/libosal.a ${D}${base_libdir}
-  install -D -m 0755 ${S}/quickassist/lookaside/access_layer/src/qat_direct/src/build/linux_2.6/user_space/libadf_user.a ${D}${base_libdir}/libadf.a
+  install -D -m 0755 ${S}/quickassist/lookaside/access_layer/src/qat_direct/src/libadf_user.a ${D}${base_libdir}/libadf.a
   install -D -m 0755 ${S}/quickassist/utilities/libusdm_drv/libusdm_drv_s.so ${D}${base_libdir}
   install -D -m 0755 ${S}/quickassist/utilities/libusdm_drv/libusdm_drv.a ${D}${base_libdir}
   install -D -m 0750 ${S}/quickassist/utilities/adf_ctl/adf_ctl ${D}${sbindir}
@@ -130,16 +130,7 @@ do_install() {
   install -D -m 640 ${S}/quickassist/utilities/adf_ctl/conf_files/*.conf  ${D}${sysconfdir}/conf_files
   install -D -m 640 ${S}/quickassist/utilities/adf_ctl/conf_files/*.conf.vm  ${D}${sysconfdir}/conf_files
 
-  install -m 0755 ${S}/quickassist/qat/fw/qat_d15xx.bin  ${D}${nonarch_base_libdir}/firmware
-  install -m 0755 ${S}/quickassist/qat/fw/qat_d15xx_mmp.bin  ${D}${nonarch_base_libdir}/firmware
-
-  # ICE-D LCC
-  install -m 0755 ${S}/quickassist/qat/fw/qat_200xx.bin  ${D}${nonarch_base_libdir}/firmware
-  install -m 0755 ${S}/quickassist/qat/fw/qat_200xx_mmp.bin  ${D}${nonarch_base_libdir}/firmware
-
-  # ICE-D HCC
-  install -m 0755 ${S}/quickassist/qat/fw/qat_c4xxx.bin ${D}${nonarch_base_libdir}/firmware
-  install -m 0755 ${S}/quickassist/qat/fw/qat_c4xxx_mmp.bin ${D}${nonarch_base_libdir}/firmware
+  install -m 0755 ${S}/quickassist/qat/fw/*.bin  ${D}${nonarch_base_libdir}/firmware
 
   install -d ${D}${QAT_HEADER_FILES}/include
   install -d ${D}${QAT_HEADER_FILES}/include/dc
